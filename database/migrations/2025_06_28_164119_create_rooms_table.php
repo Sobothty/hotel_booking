@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->foreignId('room_type_id')->constrained();
+            $table->text('description')->nullable();
+            $table->decimal('price', 10, 2);
+            $table->boolean('is_available')->default(true);
             $table->timestamps();
         });
     }
