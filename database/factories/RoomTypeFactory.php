@@ -27,6 +27,7 @@ class RoomTypeFactory extends Factory
                 'Presidential Suite',
             ]),
             'description' => $this->faker->paragraph(),
+            'price' => $this->faker->numberBetween(50, 300) + 0.99,
         ];
     }
 }

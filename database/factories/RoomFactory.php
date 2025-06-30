@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Room;
 use App\Models\RoomType;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use phpDocumentor\Reflection\PseudoTypes\True_;
 
 class RoomFactory extends Factory
 {
@@ -21,8 +22,7 @@ class RoomFactory extends Factory
             'name' => 'Room ' . $this->faker->numberBetween(1000, 9999), // Larger range
             'room_type_id' => RoomType::factory(),
             'description' => $this->faker->paragraph(),
-            'price' => $this->faker->numberBetween(50, 300) + 0.99,
-            'is_available' => $this->faker->boolean(80),
+            'is_available' => true,
         ];
     }
 

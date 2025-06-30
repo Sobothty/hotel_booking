@@ -14,7 +14,6 @@ class Room extends Model
         'name',
         'room_type_id',
         'description',
-        'price',
         'is_available'
     ];
 
@@ -26,5 +25,10 @@ class Room extends Model
     public function bookings()
     {
         return $this->hasMany(Booking::class);
+    }
+
+    public function getPriceAttribute()
+    {
+        return $this->roomType->price;
     }
 }

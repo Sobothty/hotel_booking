@@ -23,6 +23,14 @@ class CheckInController extends Controller
 
     public function checkIn(Request $request, Booking $booking)
     {
+        // Direct check for admin role
+        if ($request->user()->role !== 'admin') {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized. Admin access required.'
+            ], 403);
+        }
+
         $validator = Validator::make($request->all(), [
             'room_id' => 'required|exists:rooms,id',
             'payment_amount' => 'required|numeric',
@@ -115,8 +123,16 @@ class CheckInController extends Controller
         }
     }
 
-    public function checkOut(Booking $booking)
+    public function checkOut(Request $request, Booking $booking)
     {
+        // Direct check for admin role
+        if ($request->user()->role !== 'admin') {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized. Admin access required.'
+            ], 403);
+        }
+
         // Verify booking can be checked out
         if ($booking->status !== 'checked_in') {
             return response()->json([

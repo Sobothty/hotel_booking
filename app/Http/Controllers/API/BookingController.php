@@ -98,8 +98,16 @@ class BookingController extends Controller
         ]);
     }
 
-    public function adminIndex()
+    public function adminIndex(Request $request)
     {
+        // Direct check for admin role
+        if ($request->user()->role !== 'admin') {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized. Admin access required.'
+            ], 403);
+        }
+
         $bookings = Booking::with(['user', 'roomType', 'room'])
             ->orderBy('check_in_date')
             ->get();
