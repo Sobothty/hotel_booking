@@ -11,8 +11,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Your existing seeders
+
+        // Add the rooms seeder
         $this->call([
-            RoomSeeder::class,
+            RoomsTableSeeder::class,
         ]);
     }
 }

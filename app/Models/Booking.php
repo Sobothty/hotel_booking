@@ -11,6 +11,7 @@ class Booking extends Model
     use HasFactory;
 
     protected $fillable = [
+        'booking_group_id',
         'user_id',
         'room_type_id',
         'room_id',
@@ -19,8 +20,11 @@ class Booking extends Model
         'guests',
         'status',
         'total_price',
-        'payment_status',
         'payment_method',
+        'payment_status',
+        'currency',
+        'exchange_rate',
+        'total_price_local'
     ];
 
     protected $casts = [

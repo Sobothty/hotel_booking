@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Room;
+use App\Models\RoomType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -122,6 +123,41 @@ class RoomController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Room deleted successfully'
+        ]);
+    }
+
+    /**
+     * Get available rooms for a specific room type
+     * 
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getAvailableRoomsByType(Request $request, $roomTypeId)
+    {
+        // Validate room_type_id
+        $roomType = RoomType::find($roomTypeId);
+        if (!$roomType) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Room type not found'
+            ], 404);
+        }
+
+        // Get available rooms of this type
+        $availableRooms = Room::where('room_type_id', $roomTypeId)
+            ->where('is_available', true)
+            ->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'room_type' => [
+                    'id' => $roomType->id,
+                    'name' => $roomType->name
+                ],
+                'available_rooms' => $availableRooms,
+                'count' => $availableRooms->count()
+            ]
         ]);
     }
 }
